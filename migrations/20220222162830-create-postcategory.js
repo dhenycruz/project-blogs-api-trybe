@@ -11,7 +11,7 @@ module.exports = {
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        primarykey: true,
+        primaryKey: true,
       },
       categoryId: {
         type: Sequelize.INTEGER,
@@ -21,12 +21,12 @@ module.exports = {
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        primarykey: true,
+        primaryKey: true,
       },
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
-   await queryInterface.dropTable('PostCategories');
+  down: async (queryInterface, _Sequelize) => {
+    await queryInterface.dropTable('PostsCategories');
   }
 };

@@ -1,9 +1,9 @@
-'use strict';
+const { NULL } = require("mysql2/lib/constants/types");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable('BlogPosts', {
-      id: {
+    return blogPost = queryInterface.createTable('BlogPosts', {
+      id : {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -11,19 +11,18 @@ module.exports = {
       },
       title: {
         allowNull: false,
-        type: Sequelize.String,
+        type: Sequelize.STRING,
       },
       content: {
         allowNull: false,
-        type: Sequelize.String,
+        type: Sequelize.STRING,
       },
       published: {
         allowNull: false,
-        type: Sequelize.TIMESTAMP,
+        type: Sequelize.DATE,
       },
       updated: {
-        allowNull: true,
-        type: Sequelize.TIMESTAMP,
+        type: Sequelize.DATE,
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -31,14 +30,14 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
-          mode: 'Users',
+          model: 'Users',
           key: 'id',
         },
       },
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface, _Sequelize) => {
     return queryInterface.dropTable('BlogPosts');
   }
 };
