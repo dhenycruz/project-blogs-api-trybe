@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const userController = require('./src/controller/user');
+const loginController = require('./src/controller/login');
 
 const app = express();
 app.use(bodyParser.json());
@@ -20,3 +21,9 @@ userController.authUser,
 userController.authPassword,
 userController.userAlreadyExists,
 userController.createUser);
+
+app.post('/login',
+loginController.authEmail,
+loginController.authPassword,
+loginController.userAlreadyExists,
+loginController.executeLogin);

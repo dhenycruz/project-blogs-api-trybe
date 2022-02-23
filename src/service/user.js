@@ -57,12 +57,15 @@ const getAll = async () => {
 };
 
 const createUser = async (bodyUser) => {
-  const { displayName, email, password, image } = bodyUser;
-  const newUser = await User.create({ displayName, email, password, image });
+  try {
+    const { displayName, email, password, image } = bodyUser;
+    const newUser = await User.create({ displayName, email, password, image });
+    const token = jwt.sign({ data: newUser }, secret, configJWT);
 
-  const token = jwt.sign({ data: newUser }, secret, configJWT);
-
-  return { status: 201, token };
+    return { status: 201, token };
+  } catch (e) {
+    console.log(e.message);
+  }
 };
 
 module.exports = {
