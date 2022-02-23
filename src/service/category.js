@@ -6,6 +6,11 @@ const authName = (name) => {
   return true;
 };
 
+const getAll = async () => {
+  const categories = await Category.findAll();
+  return categories;
+};
+
 const createCategory = async ({ name }) => {
   try {
     const category = await Category.create({ name });
@@ -18,4 +23,5 @@ const createCategory = async ({ name }) => {
 module.exports = {
   createCategory,
   authName,
+  getAll,
 };

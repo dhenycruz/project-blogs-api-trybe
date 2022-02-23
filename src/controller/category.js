@@ -8,13 +8,18 @@ const authName = (req, res, next) => {
   next();
 };
 
+const getAll = async (_req, res) => {
+  const categories = await modelCategory.getAll();
+  res.status(200).json(categories);
+};
+
 const createCategory = async (req, res) => {
   const category = await modelCategory.createCategory(req.body);
-  console.log(category);
   res.status(201).json(category);
 };
 
 module.exports = {
   authName,
   createCategory,
+  getAll,
 };

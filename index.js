@@ -33,3 +33,5 @@ app.get('/user', authToken, userController.getAll);
 app.get('/user/:id', authToken, userController.getUser);
 
 app.post('/categories', categoryController.authName, authToken, categoryController.createCategory);
+
+app.get('/categories', authToken, categoryController.getAll);
