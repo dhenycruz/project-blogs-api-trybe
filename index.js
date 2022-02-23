@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const userController = require('./src/controller/user');
 const loginController = require('./src/controller/login');
 const authToken = require('./src/auth/validateToken');
+const categoryController = require('./src/controller/category');
 
 const app = express();
 app.use(bodyParser.json());
@@ -30,3 +31,5 @@ userController.createUser);
 app.get('/user', authToken, userController.getAll);
 
 app.get('/user/:id', authToken, userController.getUser);
+
+app.post('/categories', categoryController.authName, authToken, categoryController.createCategory);
