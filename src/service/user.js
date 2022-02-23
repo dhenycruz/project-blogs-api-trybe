@@ -55,6 +55,13 @@ const getAll = async () => {
   }
 };
 
+const getUser = async (id) => {
+  const [user] = await User.findAll({ attributes: { exclude: ['password'] }, where: { id } });
+  if (!user) return { status: 404, message: 'User does not exist' };
+
+  return { status: 200, user };
+};
+
 const createUser = async (bodyUser) => {
   try {
     const { displayName, email, password, image } = bodyUser;
@@ -73,4 +80,5 @@ module.exports = {
   authPassword,
   userAlreadyExists,
   createUser,
+  getUser,
 };

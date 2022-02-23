@@ -36,10 +36,18 @@ const getAll = async (_req, res) => {
   res.status(200).json(users);
 };
 
+const getUser = async (req, res) => {
+  const { id } = req.params;
+  const user = await modelUser.getUser(id);
+  if (user.status === 404) return res.status(user.status).json({ message: user.message });
+  res.status(user.status).json(user.user);
+};
+
 module.exports = {
   getAll,
   authUser,
   authPassword,
   userAlreadyExists,
   createUser,
+  getUser,
 };

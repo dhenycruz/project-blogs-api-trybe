@@ -15,7 +15,11 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-app.get('/user', authToken, userController.getAll);
+app.post('/login',
+loginController.authEmail,
+loginController.authPassword,
+loginController.userAlreadyExists,
+loginController.executeLogin);
 
 app.post('/user', 
 userController.authUser,
@@ -23,8 +27,6 @@ userController.authPassword,
 userController.userAlreadyExists,
 userController.createUser);
 
-app.post('/login',
-loginController.authEmail,
-loginController.authPassword,
-loginController.userAlreadyExists,
-loginController.executeLogin);
+app.get('/user', authToken, userController.getAll);
+
+app.get('/user/:id', authToken, userController.getUser);
