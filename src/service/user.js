@@ -48,8 +48,7 @@ const userAlreadyExists = async (email) => {
 
 const getAll = async () => {
   try {
-    const users = await User.findAll();
-    console.log(users);
+    const users = await User.findAll({ attributes: { exclude: ['password'] } });
     return users;
   } catch (e) {
     console.log(e.message);

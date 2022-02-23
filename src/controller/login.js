@@ -24,7 +24,7 @@ const userAlreadyExists = async (req, res, next) => {
 
 const executeLogin = async (req, res) => {
   const result = await loginModel.executeLogin(req.body);
-  if (result !== true) return res.status(result.status).json({ message: result.message });
+  if (result.status === 400) return res.status(result.status).json({ message: result.message });
 
   res.status(result.status).json({ token: result.token });
 };
