@@ -62,3 +62,5 @@ authToken,
 postController.postExist,
 postController.authorizationUser,
 postController.deletePost);
+
+app.delete('/user/me', authToken, userController.deleteUser);

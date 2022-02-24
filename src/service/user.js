@@ -74,6 +74,10 @@ const createUser = async (bodyUser) => {
   }
 };
 
+const deleteUser = async (id) => {
+  await User.destroy({ where: { id } });
+};
+
 module.exports = {
   getAll,
   authUser,
@@ -81,4 +85,5 @@ module.exports = {
   userAlreadyExists,
   createUser,
   getUser,
+  deleteUser,
 };

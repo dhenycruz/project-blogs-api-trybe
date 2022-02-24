@@ -43,6 +43,12 @@ const getUser = async (req, res) => {
   res.status(user.status).json(user.user);
 };
 
+const deleteUser = async (req, res) => {
+  const { id } = req.user.dataValues;
+  await modelUser.deleteUser(id);
+  res.status(204).send();
+};
+
 module.exports = {
   getAll,
   authUser,
@@ -50,4 +56,5 @@ module.exports = {
   userAlreadyExists,
   createUser,
   getUser,
+  deleteUser,
 };
