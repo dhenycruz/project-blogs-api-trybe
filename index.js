@@ -46,3 +46,5 @@ postController.authCategoriesExists,
 postController.createPost);
 
 app.get('/post', authToken, postController.getAll);
+
+app.get('/post/:id', authToken, postController.getPost);

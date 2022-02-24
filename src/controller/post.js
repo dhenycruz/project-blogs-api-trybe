@@ -42,6 +42,13 @@ const getAll = async (_req, res) => {
   res.status(200).json(result);
 };
 
+const getPost = async (req, res) => {
+  const { id } = req.params;
+  const result = await modelBlogPost.getPost(id);
+  if (result.status === 404) return res.status(result.status).json({ message: result.message });
+  res.status(result.status).json(result.post);
+};
+
 module.exports = {
   authTitle,
   authContent,
@@ -49,4 +56,5 @@ module.exports = {
   authCategoriesExists,
   createPost,
   getAll,
+  getPost,
 };

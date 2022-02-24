@@ -64,6 +64,23 @@ const getAll = async () => {
   }
 };
 
+const getPost = async (id) => {
+  try {
+    const post = await BlogPost.findOne({
+      where: { id },
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
+    });
+    console.log(post);
+    if (!post) return { status: 404, message: 'Post does not exist' };
+    return { status: 200, post };
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
 module.exports = {
   authTitle,
   authContent,
@@ -71,4 +88,5 @@ module.exports = {
   authCategoriesExists,
   createPost,
   getAll,
+  getPost,
 };
