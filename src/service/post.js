@@ -86,9 +86,15 @@ const categoriesCannotBeEdited = (bodyPost) => {
   return true;
 };
 
+const postExist = async (id) => {
+  const post = await getPost(id);
+  if (!post.post) return { status: 404, message: 'Post does not exist' };
+
+  return true;
+};
+
 const authorizationUser = async (userId, postId) => {
   const post = await getPost(postId);
-  console.log(post.post.userId, userId);
   if (post.post.userId !== userId) return { status: 401, message: 'Unauthorized user' };
   return true;
 };
@@ -104,6 +110,10 @@ const updatePost = async (bodyPost, postId, userId) => {
   }
 };
 
+const deletePost = async (postId) => {
+  await BlogPost.destroy({ where: { id: postId } });
+};
+
 module.exports = {
   authTitle,
   authContent,
@@ -114,5 +124,7 @@ module.exports = {
   getPost,
   updatePost,
   categoriesCannotBeEdited,
+  postExist,
   authorizationUser,
+  deletePost,
 };

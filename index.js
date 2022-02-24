@@ -56,3 +56,9 @@ postController.authContent,
 postController.categoriesCannotBeEdited,
 postController.authorizationUser,
 postController.updatePost);
+
+app.delete('/post/:id',
+authToken,
+postController.postExist,
+postController.authorizationUser,
+postController.deletePost);
