@@ -37,6 +37,10 @@ app.post('/categories', categoryController.authName, authToken, categoryControll
 
 app.get('/categories', authToken, categoryController.getAll);
 
+app.get('/post/search', 
+authToken,
+postController.findQuery);
+
 app.post('/post',
 authToken,
 postController.authTitle,

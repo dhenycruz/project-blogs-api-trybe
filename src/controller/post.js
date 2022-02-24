@@ -89,6 +89,13 @@ const deletePost = async (req, res) => {
   res.status(204).send();
 };
 
+const findQuery = async (req, res) => {
+  const { q } = req.query;
+  const result = await modelBlogPost.findQuery(q);
+  console.log(result);
+  res.status(200).send(result);
+};
+
 module.exports = {
   authTitle,
   authContent,
@@ -102,4 +109,5 @@ module.exports = {
   postExist,
   authorizationUser,
   deletePost,
+  findQuery,
 };
