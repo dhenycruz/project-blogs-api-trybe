@@ -5,6 +5,7 @@ const userController = require('./src/controller/user');
 const loginController = require('./src/controller/login');
 const authToken = require('./src/auth/validateToken');
 const categoryController = require('./src/controller/category');
+const postController = require('./src/controller/post');
 
 const app = express();
 app.use(bodyParser.json());
@@ -35,3 +36,11 @@ app.get('/user/:id', authToken, userController.getUser);
 app.post('/categories', categoryController.authName, authToken, categoryController.createCategory);
 
 app.get('/categories', authToken, categoryController.getAll);
+
+app.post('/post',
+authToken,
+postController.authTitle,
+postController.authContent,
+postController.authCategories,
+postController.authCategoriesExists,
+postController.createPost);
