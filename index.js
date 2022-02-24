@@ -48,3 +48,11 @@ postController.createPost);
 app.get('/post', authToken, postController.getAll);
 
 app.get('/post/:id', authToken, postController.getPost);
+
+app.put('/post/:id',
+authToken,
+postController.authTitle,
+postController.authContent,
+postController.categoriesCannotBeEdited,
+postController.authorizationUser,
+postController.updatePost);

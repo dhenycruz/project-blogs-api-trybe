@@ -49,6 +49,31 @@ const getPost = async (req, res) => {
   res.status(result.status).json(result.post);
 };
 
+const categoriesCannotBeEdited = (req, res, next) => {
+  const result = modelBlogPost.categoriesCannotBeEdited(req.body);
+  if (result !== true) return res.status(result.status).json({ message: result.message });
+
+  next();
+};
+
+const authorizationUser = async (req, res, next) => {
+  const { id } = req.params;
+  const userId = req.user.dataValues.id;
+  const result = await modelBlogPost.authorizationUser(userId, id);
+  console.log(result);
+  if (result !== true) return res.status(result.status).json({ message: result.message });
+
+  next();
+};
+
+const updatePost = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user.dataValues.id;
+  const result = await modelBlogPost.updatePost(req.body, id, userId);
+  if (result.status === 200) return res.status(result.status).json(result.post);
+  res.status(401).json({ message: result.message });
+};
+
 module.exports = {
   authTitle,
   authContent,
@@ -57,4 +82,7 @@ module.exports = {
   createPost,
   getAll,
   getPost,
+  updatePost,
+  categoriesCannotBeEdited,
+  authorizationUser,
 };

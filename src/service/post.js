@@ -73,9 +73,32 @@ const getPost = async (id) => {
         { model: Category, as: 'categories', through: { attributes: [] } },
       ],
     });
-    console.log(post);
     if (!post) return { status: 404, message: 'Post does not exist' };
     return { status: 200, post };
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+const categoriesCannotBeEdited = (bodyPost) => {
+  if (bodyPost.categoryIds) return { status: 400, message: 'Categories cannot be edited' };
+
+  return true;
+};
+
+const authorizationUser = async (userId, postId) => {
+  const post = await getPost(postId);
+  console.log(post.post.userId, userId);
+  if (post.post.userId !== userId) return { status: 401, message: 'Unauthorized user' };
+  return true;
+};
+
+const updatePost = async (bodyPost, postId, userId) => {
+  const { title, content } = bodyPost;
+  try {
+    const post = await BlogPost.update({ title, content }, { where: { id: postId, userId } });
+    const returnPost = await getPost(post);
+    return { status: 200, post: returnPost.post };
   } catch (e) {
     console.log(e.message);
   }
@@ -89,4 +112,7 @@ module.exports = {
   createPost,
   getAll,
   getPost,
+  updatePost,
+  categoriesCannotBeEdited,
+  authorizationUser,
 };
