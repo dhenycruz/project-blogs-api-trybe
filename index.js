@@ -44,3 +44,5 @@ postController.authContent,
 postController.authCategories,
 postController.authCategoriesExists,
 postController.createPost);
+
+app.get('/post', authToken, postController.getAll);

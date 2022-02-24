@@ -37,10 +37,16 @@ const createPost = async (req, res) => {
   res.status(201).json(post);
 };
 
+const getAll = async (_req, res) => {
+  const result = await modelBlogPost.getAll();
+  res.status(200).json(result);
+};
+
 module.exports = {
   authTitle,
   authContent,
   authCategories,
   authCategoriesExists,
   createPost,
+  getAll,
 };

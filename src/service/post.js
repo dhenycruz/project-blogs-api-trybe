@@ -1,5 +1,5 @@
 const { Category } = require('../../models');
-const { BlogPost, PostsCategories } = require('../../models');
+const { User, BlogPost, PostsCategories } = require('../../models');
 
 const authTitle = (title) => {
   if (title === '' || title === undefined) return { status: 400, message: '"title" is required' };
@@ -33,12 +33,6 @@ const authCategoriesExists = async (categories) => {
   return true;
 };
 
-/* {
-  "title": "Latest updates, August 1st",
-  "content": "The whole text for the blog post goes here in this key",
-  "categoryIds": [1, 2]
-} */
-
 const savePostCategory = async (postId, catId) => {
   const saveCat = await PostsCategories.create({ postId, categoryId: catId });
   return saveCat;
@@ -49,14 +43,25 @@ const createPost = async (bodyPost, userId) => {
   const newPost = await BlogPost.create({ title, content, userId });
   
   const postId = newPost.dataValues.id;
-  console.log(categoryIds);
   categoryIds.forEach(async (catId) => {
-    console.log(catId);
-    // const save = await PostsCategories.create({ postId, catId });
     await savePostCategory(postId, catId);
   });
   
   return newPost.dataValues;
+};
+
+const getAll = async () => {
+  try {
+    const posts = await BlogPost.findAll({
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
+    });
+    return posts;
+  } catch (e) {
+    console.log(e.message);
+  }
 };
 
 module.exports = {
@@ -65,4 +70,5 @@ module.exports = {
   authCategories,
   authCategoriesExists,
   createPost,
+  getAll,
 };
